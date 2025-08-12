@@ -3,111 +3,149 @@
 <head>
   <meta charset="UTF-8" />
   <title>Contact Us - EmailJS</title>
-  <!-- Load EmailJS SDK -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- EmailJS SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to right, #6a11cb, #2575fc);
-      margin: 0;
-      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #6e8efb, #a777e3);
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      color: #fff;
+      margin: 0;
+      padding: 20px;
     }
 
     .contact-container {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(12px);
       padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-      max-width: 400px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
       width: 100%;
+      max-width: 400px;
+      color: white;
     }
 
     h2 {
       text-align: center;
       margin-bottom: 20px;
+      font-weight: 600;
     }
 
     .field {
-      margin-bottom: 15px;
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .field input, 
+    .field textarea {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      outline: none;
+      font-size: 14px;
+      background: rgba(255, 255, 255, 0.25);
+      color: white;
     }
 
     .field label {
-      display: block;
+      position: absolute;
+      top: 12px;
+      left: 12px;
       font-size: 14px;
-      margin-bottom: 5px;
+      color: rgba(255, 255, 255, 0.7);
+      pointer-events: none;
+      transition: 0.2s ease;
     }
 
-    .field input, .field textarea {
-      width: 100%;
-      padding: 10px;
-      font-size: 14px;
-      border-radius: 6px;
-      border: none;
-      outline: none;
-      box-sizing: border-box;
+    .field input:focus + label,
+    .field input:not(:placeholder-shown) + label,
+    .field textarea:focus + label,
+    .field textarea:not(:placeholder-shown) + label {
+      top: -8px;
+      left: 8px;
+      font-size: 12px;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 2px 6px;
+      border-radius: 4px;
     }
 
     textarea {
       resize: none;
-      height: 100px;
+      min-height: 80px;
     }
 
-    #button {
+    input[type="submit"] {
       width: 100%;
       padding: 12px;
       font-size: 16px;
-      background: #ff7e5f;
-      background: linear-gradient(to right, #ff7e5f, #feb47b);
-      color: #fff;
+      font-weight: 600;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #ff758c, #ff7eb3);
+      color: white;
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
-    #button:hover {
-      background: linear-gradient(to right, #feb47b, #ff7e5f);
+    input[type="submit"]:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(255, 118, 140, 0.4);
+    }
+
+    small {
+      display: block;
+      text-align: center;
+      margin-top: 10px;
+      font-size: 12px;
+      opacity: 0.8;
     }
   </style>
 </head>
 <body>
-
+  
   <div class="contact-container">
     <h2>Contact Us</h2>
     <form id="form">
       <div class="field">
+        <input type="text" name="from_name" id="from_name" placeholder=" " required>
         <label for="from_name">Your Name</label>
-        <input type="text" name="from_name" id="from_name" required>
       </div>
       <div class="field">
+        <input type="email" name="email_id" id="email_id" placeholder=" " required>
         <label for="email_id">Your Email</label>
-        <input type="email" name="email_id" id="email_id" required>
       </div>
       <div class="field">
-        <label for="message">Message</label>
-        <textarea name="message" id="message" required></textarea>
+        <textarea name="message" id="message" placeholder=" " required></textarea>
+        <label for="message">Your Message</label>
       </div>
       <div class="field">
-        <label for="reply_to">Reply To</label>
-        <input type="email" name="reply_to" id="reply_to">
+        <input type="text" name="reply_to" id="reply_to" placeholder=" ">
+        <label for="reply_to">Reply-To (optional)</label>
       </div>
-      <input type="submit" id="button" value="Send Email">
+      <input type="submit" id="button" value="Send Message">
     </form>
+    <small>We respect your privacy. Your info stays with us.</small>
   </div>
 
-  <script type="text/javascript">
-    emailjs.init('Cg82c8zdEbc64u2BJ');
-
+  <script>
+    emailjs.init('Cg82c8zdEbc64u2BJ'); // Your EmailJS Public Key
+    
     const btn = document.getElementById('button');
+    const form = document.getElementById('form');
 
-    document.getElementById('form').addEventListener('submit', function(event) {
+    form.addEventListener('submit', function(event) {
       event.preventDefault();
+
       btn.value = 'Sending...';
 
       const serviceID = 'default_service';
@@ -115,14 +153,14 @@
 
       emailjs.sendForm(serviceID, templateID, this)
         .then(() => {
-          btn.value = 'Send Email';
-          alert('Your message has been sent successfully!');
+          btn.value = 'Send Message';
+          alert('Message sent successfully!');
+          form.reset();
         }, (err) => {
-          btn.value = 'Send Email';
+          btn.value = 'Send Message';
           alert(JSON.stringify(err));
         });
     });
   </script>
-
 </body>
 </html>
