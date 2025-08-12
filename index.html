@@ -10,6 +10,25 @@
  <script type="text/javascript"src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script type="text/javascript">
   emailjs.init('Cg82c8zdEbc64u2BJ')
+
+ 
+</script>
+ <!-- Load EmailJS only once -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script type="text/javascript">
+  // Replace with your actual EmailJS user ID
+  emailjs.init('Cg82c8zdEbc64u2BJ'); 
+
+  document.getElementById('form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', this)
+      .then(function() {
+        alert('Message sent successfully!');
+      }, function(error) {
+        alert('Failed to send message: ' + error.text);
+      });
+  });
 </script>
 
 </head>
