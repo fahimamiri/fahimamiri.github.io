@@ -2,90 +2,127 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>EmailJS Test Example</title>
+  <title>Contact Us - EmailJS</title>
   <!-- Load EmailJS SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #6a11cb, #2575fc);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: #fff;
+    }
+
+    .contact-container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      max-width: 400px;
+      width: 100%;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .field {
+      margin-bottom: 15px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    .field input, .field textarea {
+      width: 100%;
+      padding: 10px;
+      font-size: 14px;
+      border-radius: 6px;
+      border: none;
+      outline: none;
+      box-sizing: border-box;
+    }
+
+    textarea {
+      resize: none;
+      height: 100px;
+    }
+
+    #button {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      background: #ff7e5f;
+      background: linear-gradient(to right, #ff7e5f, #feb47b);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    #button:hover {
+      background: linear-gradient(to right, #feb47b, #ff7e5f);
+    }
+  </style>
 </head>
 <body>
-  <h2>Test EmailJS Form</h2>
-  <form id="form">
-  <div class="field">
-    <label for="from_name">from_name</label>
-    <input type="text" name="from_name" id="from_name">
+
+  <div class="contact-container">
+    <h2>Contact Us</h2>
+    <form id="form">
+      <div class="field">
+        <label for="from_name">Your Name</label>
+        <input type="text" name="from_name" id="from_name" required>
+      </div>
+      <div class="field">
+        <label for="email_id">Your Email</label>
+        <input type="email" name="email_id" id="email_id" required>
+      </div>
+      <div class="field">
+        <label for="message">Message</label>
+        <textarea name="message" id="message" required></textarea>
+      </div>
+      <div class="field">
+        <label for="reply_to">Reply To</label>
+        <input type="email" name="reply_to" id="reply_to">
+      </div>
+      <input type="submit" id="button" value="Send Email">
+    </form>
   </div>
-  <div class="field">
-    <label for="email_id">email_id</label>
-    <input type="text" name="email_id" id="email_id">
-  </div>
-  <div class="field">
-    <label for="message">message</label>
-    <input type="text" name="message" id="message">
-  </div>
-  <div class="field">
-    <label for="reply_to">reply_to</label>
-    <input type="text" name="reply_to" id="reply_to">
-  </div>
 
-  <input type="submit" id="button" value="Send Email" >
-</form>
+  <script type="text/javascript">
+    emailjs.init('Cg82c8zdEbc64u2BJ');
 
-<script type="text/javascript"
-  src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    const btn = document.getElementById('button');
 
-<script type="text/javascript">
-  emailjs.init('Cg82c8zdEbc64u2BJ')
-</script>
-  <p id="result"></p>
-  <script>
-    
-  const btn = document.getElementById('button');
+    document.getElementById('form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      btn.value = 'Sending...';
 
-document.getElementById('form')
- .addEventListener('submit', function(event) {
-   event.preventDefault();
+      const serviceID = 'default_service';
+      const templateID = 'template_glubg29';
 
-   btn.value = 'Sending...';
-
-   const serviceID = 'default_service';
-   const templateID = 'template_glubg29';
-
-   emailjs.sendForm(serviceID, templateID, this)
-    .then(() => {
-      btn.value = 'Send Email';
-      alert('Sent!');
-    }, (err) => {
-      btn.value = 'Send Email';
-      alert(JSON.stringify(err));
+      emailjs.sendForm(serviceID, templateID, this)
+        .then(() => {
+          btn.value = 'Send Email';
+          alert('Your message has been sent successfully!');
+        }, (err) => {
+          btn.value = 'Send Email';
+          alert(JSON.stringify(err));
+        });
     });
-});
   </script>
 
-  <style>
-    .field {
-  margin-bottom: 10px;
-}
-
-.field label {
-  display: block;
-  font-size: 12px;
-  color: #777;
-}
-
-.field input {
-  display: block;
-  min-width: 250px;
-  line-height: 1.5;
-  font-size: 14px;
-}
-
-input[type="submit"] {
-  display: block;
-  padding: 6px 30px;
-  font-size: 14px;
-  background-color: #4460AA;
-  color: #fff;
-  border: none
-}</style>
-  </style>
 </body>
 </html>
