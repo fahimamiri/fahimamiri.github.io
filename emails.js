@@ -1,20 +1,15 @@
-const btn = document.getElementById('button');
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  emailjs.init('Cg82c8zdEbc64u2BJ');
+  document.getElementById('form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent default HTML form submission
 
-document.getElementById('form')
- .addEventListener('submit', function(event) {
-   event.preventDefault();
-
-   btn.value = 'Sending...';
-
-   const serviceID = 'default_service';
-   const templateID = 'template_glubg29';
-
-   emailjs.sendForm(serviceID, templateID, this)
-    .then(() => {
-      btn.value = 'Send Email';
-      alert('Sent!');
-    }, (err) => {
-      btn.value = 'Send Email';
-      alert(JSON.stringify(err));
-    });
+    emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', this)
+      .then(function() {
+        alert('Message sent successfully!');
+      }, function(error) {
+        alert('Failed to send message: ' + error.text);
+      });
+  });
 });
+</script>
