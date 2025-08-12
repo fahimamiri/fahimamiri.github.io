@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>EmailJS Test Example</title>
+  <!-- Load EmailJS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</head>
+<body>
+  <h2>Test EmailJS Form</h2>
+  <form id="form">
+    <label for="from_name">Name:</label>
+    <input type="text" id="from_name" name="from_name" required /><br/><br/>
+    
+    <label for="email_id">Email:</label>
+    <input type="email" id="email_id" name="email_id" required /><br/><br/>
+    
+    <label for="message">Message:</label>
+    <textarea id="message" name="message" required></textarea><br/><br/>
+    
+    <button type="submit">Send</button>
+  </form>
+  <p id="result"></p>
+  <script>
+    // Replace with your EmailJS public key
+    emailjs.init('YOUR_PUBLIC_KEY');
+
+    document.getElementById('form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', this)
+        .then(function() {
+          document.getElementById('result').innerText = "Message sent successfully!";
+        }, function(error) {
+          document.getElementById('result').innerText = "Failed to send message: " + JSON.stringify(error);
+        });
+    });
+  </script>
+</body>
+</html>
