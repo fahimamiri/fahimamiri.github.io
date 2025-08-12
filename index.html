@@ -63,4 +63,152 @@
       width: 100%;
       padding: 12px;
       border: 2px solid rgba(0, 255, 128, 0.5);
-      b
+      border-radius: 8px;
+      outline: none;
+      font-size: 14px;
+      background: rgba(0, 0, 0, 0.2);
+      color: white;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .field input:focus, 
+    .field textarea:focus {
+      border-color: #00ff80;
+      box-shadow: 0 0 8px #00ff80;
+    }
+
+    .field label {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.7);
+      pointer-events: none;
+      transition: 0.2s ease;
+    }
+
+    .field input:focus + label,
+    .field input:not(:placeholder-shown) + label,
+    .field textarea:focus + label,
+    .field textarea:not(:placeholder-shown) + label {
+      top: -8px;
+      left: 8px;
+      font-size: 12px;
+      background: #121657;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    textarea {
+      resize: none;
+      min-height: 80px;
+    }
+
+    input[type="submit"] {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #00ff80, #00cc66, #00ff80);
+      background-size: 200% 100%;
+      color: #121657;
+      cursor: pointer;
+      animation: gradientShift 3s infinite linear;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+
+    input[type="submit"]:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 255, 128, 0.4);
+    }
+
+    small {
+      display: block;
+      text-align: center;
+      margin-top: 10px;
+      font-size: 12px;
+      opacity: 0.8;
+    }
+
+    /* Right image section */
+    .image-side {
+      flex: 1;
+      background: url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=900&q=80') no-repeat center center/cover;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+      .image-side {
+        height: 200px;
+      }
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="container">
+    <!-- Left form -->
+    <div class="contact-container">
+      <h2>Contact Us</h2>
+      <form id="form">
+        <div class="field">
+          <input type="text" name="from_name" id="from_name" placeholder=" " required>
+          <label for="from_name">Your Name</label>
+        </div>
+        <div class="field">
+          <input type="email" name="email_id" id="email_id" placeholder=" " required>
+          <label for="email_id">Your Email</label>
+        </div>
+        <div class="field">
+          <textarea name="message" id="message" placeholder=" " required></textarea>
+          <label for="message">Your Message</label>
+        </div>
+        <div class="field">
+          <input type="text" name="reply_to" id="reply_to" placeholder=" ">
+          <label for="reply_to">Reply-To (optional)</label>
+        </div>
+        <input type="submit" id="button" value="Send Message">
+      </form>
+      <small>We respect your privacy. Your info stays with us.</small>
+    </div>
+
+    <!-- Right image -->
+    <div class="image-side"></div>
+  </div>
+
+  <script>
+    emailjs.init('Cg82c8zdEbc64u2BJ'); // Your EmailJS Public Key
+    
+    const btn = document.getElementById('button');
+    const form = document.getElementById('form');
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      btn.value = 'Sending...';
+
+      const serviceID = 'default_service';
+      const templateID = 'template_glubg29';
+
+      emailjs.sendForm(serviceID, templateID, this)
+        .then(() => {
+          btn.value = 'Send Message';
+          alert('Message sent successfully!');
+          form.reset();
+        }, (err) => {
+          btn.value = 'Send Message';
+          alert(JSON.stringify(err));
+        });
+    });
+  </script>
+</body>
+</html>
