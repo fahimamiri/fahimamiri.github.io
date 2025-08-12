@@ -134,22 +134,21 @@ From fixing leaks to modernizing fixtures, we ensure lasting comfort and style f
 <div class="contact-container">
   <h1>Get In touch wiht us</h1>
   <div class="contact-grid">
-    <form id="form" class="contact-form" action="#" method="post">
-      <label for="from_name">from_name</label>
-      <input type="text" id="from_name" name="from_name" required placeholder="Your full name" />
+    <form id="form" class="contact-form">
+  <label for="from_name">Full Name</label>
+  <input type="text" id="from_name" name="from_name" required placeholder="Your full name" />
 
-      <label for="email-id">Email Address</label>
-      <input type="email" id="email_id" name="email-id" required placeholder="you@example.com" />
+  <label for="email_id">Email Address</label>
+  <input type="email" id="email_id" name="email_id" required placeholder="you@example.com" />
 
-      <label for="phone">Phone Number</label>
-      <input type="tel" id="phone" name="phone" placeholder="(optional)" />
+  <label for="phone">Phone Number</label>
+  <input type="tel" id="phone" name="phone" placeholder="(optional)" />
 
-      <label for="message">message</label>
-      <textarea type="text" id="message" name="message" required placeholder="Message"></textarea>
+  <label for="message">Message</label>
+  <textarea id="message" name="message" required placeholder="Message"></textarea>
 
-      <button type="submit"id="button" value="send">Send Message</button>
-      
-    </form>
+  <button type="submit" id="button">Send Message</button>
+</form>
     <script type="text/javascript"
   src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
